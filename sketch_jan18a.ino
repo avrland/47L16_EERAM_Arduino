@@ -12,7 +12,7 @@ void setup()
 
 }
  
- 
+char znaki[20];
 void loop()
 {
         if (Serial.available()>0) {
@@ -22,12 +22,12 @@ void loop()
                 if(incomingByte == "R"){
                   Serial.println("Podaj znak:");
                   while(Serial.available()==0) {}                  
-                    char literka = Serial.read();
+                    String literka = Serial.readString();
+                    literka.toCharArray(znaki, 20);
                     Wire.beginTransmission(0x50);
-                    Wire.write(0xA0);
                     Wire.write(0x00);
                     Wire.write(0x00);
-                    Wire.write(literka);
+                    Wire.write(znaki);
                     int error = Wire.endTransmission();
                     Serial.print("Wyslano: ");
                     Serial.print(literka);
@@ -36,7 +36,6 @@ void loop()
                 }
                 if(incomingByte == "A") {
                     Wire.beginTransmission(0x50);
-                    Wire.write(0xA1);
                     Wire.write(0x00);
                     Wire.write(0x00);
                     int error1 = Wire.endTransmission();
@@ -44,14 +43,13 @@ void loop()
                     Serial.println(error1);
 
                  //   Wire.beginTransmission(0x50);
-                    Wire.requestFrom(0x50, 2);    // request 6 bytes from slave device #2
+                    Wire.requestFrom(0x50, 20);    // request 6 bytes from slave device #2
                     while(Wire.available())   // slave may send less than requested
-                     {
-                                 Serial.print("Odebrano: ");
+                     {                                
                                  char c = Wire.read();    // receive a byte as character
-                                 Serial.println(c);         // print the character
+                                 Serial.print(c);         // print the character
                      }
-                   
+                   Serial.println(" ");
                    int error = Wire.endTransmission();
               }
        }
