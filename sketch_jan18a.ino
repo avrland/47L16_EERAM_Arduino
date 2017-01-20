@@ -1,5 +1,7 @@
 #include <Wire.h>
-// 47L16-I/SN domyślnie A1,A0=0 zgłaszał się pod adresami 0x50, 0x18
+// 47L16-I/SN domyślnie A1,A0=0 zgłaszał się pod adresami 
+// dla pamięci 0x50
+// dla rejestrów 0x18
 // http://www.esp8266.com/viewtopic.php?f=19&t=12427 sprawdzić
 void setup()
 {
